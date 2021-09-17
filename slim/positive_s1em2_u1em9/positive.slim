@@ -1,0 +1,55 @@
+initialize()
+{
+	defineConstant("N",1000);
+	defineConstant("dir","/mnt/d/slim/positive_s1em2_u1em9/");
+	defineConstant("seed", getSeed());
+
+	initializeMutationRate(1e-8+1e-9);
+	
+	//neutral
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	
+	//non-neutral
+	//initializeMutationType("m2", 0.5, "e", 0.02);
+	initializeMutationType("m2", 0.5, "f", 0.02);
+
+	initializeGenomicElementType("g1", c(m1,m2), c(10,1));
+	initializeGenomicElement(g1, 0, 1e8-1);
+	
+	initializeRecombinationRate(1e-8);
+}
+
+1
+{
+	sim.addSubpop("p1", N);
+}
+
+1: late() 
+{
+	//inds = sim.subpopulations.individuals;
+	
+	//breed_val = inds.sumOfMutationsOfType(m2);
+	//inds.fitnessScaling = exp(-1*(breed_val-opt)^2);	
+
+	//catn(sim.generation + ": Mean phenotype == " + mean(breed_val));
+	//catn(sim.generation + ": Phenotype variance == " + var(breed_val));
+	//catn(sim.generation + ": # QTLs == " + size(sim.mutationsOfType(m2)));
+}
+
+10000
+late()
+{
+	//sim.outputMutations(sim.mutations,filePath=paste0(c(dir,sim.generation,"_",seed)));
+	catn(sim.generation);
+	sim.subpopulations.individuals.genomes.output(filePath=paste0(c(dir,sim.generation,"_",seed)));
+}
+
+10010
+late()
+{
+	//sim.outputMutations(sim.mutations,filePath=paste0(c(dir,sim.generation,"_",seed)));
+	catn(sim.generation);		
+	sim.subpopulations.individuals.genomes.output(filePath=paste0(c(dir,sim.generation,"_",seed)));
+}
+
+
